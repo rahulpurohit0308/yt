@@ -1,0 +1,259 @@
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #f5f5f5;
+    z-index: 1;
+  }
+  ul {
+    list-style: none;
+  }
+.like-button{
+    border-radius:40px 0px 0px 40px;
+    padding: 5px 15px;
+    border:none;
+    font-size:17px;
+    background-color:rgb(194, 194, 194);
+}
+.liked-button{
+    border-radius:40px 0px 0px 40px;
+    padding: 5px 15px;
+    border:none;
+    color: blue;
+    font-size:17px;
+    background-color:black;
+}
+.like-button:hover{
+    cursor:pointer;
+}
+.liked-button:hover{
+    cursor:pointer;
+}
+.dislike-button{
+    border-radius:0px 40px 40px 0px;
+    font-size:17px;
+    padding: 5px 15px;
+    border:none;
+    background-color:rgb(194, 194, 194);
+}
+.disliked-button{
+    border-radius:0px 40px 40px 0px;
+    font-size:17px;
+    padding: 5px 15px;
+    border: none;
+    color: red;
+    background-color:black;
+}
+.dislike-button:hover{
+    cursor:pointer;
+}
+.disliked-button:hover{
+    cursor:pointer;
+}
+.watchlater-button{
+    background-color:rgb(194, 194, 194);
+    border-radius: 40px;
+    font-size:17px;
+    border:none;
+    padding: 5px 15px;
+}
+.watchlater-button:hover{
+    background-color:black;
+    color:white;
+    cursor:pointer;
+}
+.playlist-button{
+    background-color:rgb(194, 194, 194);
+    color: black;
+    border-radius: 40px;
+    font-size:17px;
+    border:none;
+    padding: 5px 15px;
+}
+.playlist-button:hover{
+    background-color: black; 
+    color: white;
+    cursor:pointer;
+}
+.userimg{
+    height: 40px;
+    width: 40px;
+}
+.username{
+    font-size: 20px;
+}
+.sugtitle{
+    line-height: 10px;
+}
+.suguser{
+    line-height: 8px;
+}
+.sugdt{
+    line-height: 10px;
+    font-size: 12px;
+}
+.darkeffect{
+    opacity: 0.5;
+}         
+    @media(max-width:576px){
+        .like-button{
+            border-radius:30px 0px 0px 30px;
+            padding: 4px 12px;
+            border:none;
+            font-size:14px;
+            background-color:rgb(194, 194, 194);
+        }
+        .liked-button{
+            border-radius:30px 0px 0px 30px;
+            padding: 4px 12px;
+            border:none;
+            color:blue;
+            font-size:14px;
+            background-color:black;
+        }
+        .dislike-button{
+            border-radius:0px 30px 30px 0px;
+            font-size:14px;
+            padding: 4px 12px;
+            border:none;
+            background-color:rgb(194, 194, 194);
+        }
+        .disliked-button{
+            border-radius:0px 30px 30px 0px;
+            font-size:14px;
+            padding: 4px 12px;
+            border:none;
+            color: red;
+            background-color:black;
+        }
+        .share-button{
+            background-color:rgb(194, 194, 194);
+            border-radius: 30px;
+            font-size:14px;
+            border:none;
+            padding: 4px 12px;
+        }
+        .playlist-button{
+            background-color:rgb(194, 194, 194);
+            color: black;
+            border-radius: 30px;
+            font-size:14px;
+            border:none;
+            padding: 9px 12px;
+        }
+    }
+    @media(max-width:768px) and (min-width:576px){
+        .like-button{
+            border-radius:30px 0px 0px 30px;
+            padding: 4px 12px;
+            border:none;
+            font-size:14px;
+            background-color:rgb(194, 194, 194);
+            margin-left: 340px;
+        }
+        .liked-button{
+            border-radius:30px 0px 0px 30px;
+            padding: 4px 12px;
+            border:none;
+            color:blue;
+            font-size:14px;
+            background-color:black;
+        }
+        .dislike-button{
+            border-radius:0px 30px 30px 0px;
+            font-size:14px;
+            padding: 4px 12px;
+            border:none;
+            background-color:rgb(194, 194, 194);
+        }
+        .disliked-button{
+            border-radius:0px 30px 30px 0px;
+            font-size:14px;
+            padding: 4px 12px;
+            border:none;
+            color:red;
+            background-color:black;
+        }
+        .share-button{
+            background-color:rgb(194, 194, 194);
+            border-radius: 30px;
+            font-size:14px;
+            border:none;
+            padding: 4px 12px;
+        }
+        .playlist-button{
+            background-color:rgb(194, 194, 194);
+            color: black;
+            border-radius: 30px;
+            font-size:14px;
+            border:none;
+            padding: 9px 12px;
+        }
+    }
+    @media(max-width:992px) and (min-width:768px){
+        .like-button{
+            border-radius:30px 0px 0px 30px;
+            padding: 4px 12px;
+            border:none;
+            font-size:14px;
+            background-color:rgb(194, 194, 194);
+        }
+        .liked-button{
+            border-radius:30px 0px 0px 30px;
+            padding: 4px 12px;
+            border:none;
+            font-size:14px;
+            color:blue;
+            background-color:black;
+        }
+        .dislike-button{
+            border-radius:0px 30px 30px 0px;
+            font-size:14px;
+            padding: 4px 12px;
+            border:none;
+            background-color:rgb(194, 194, 194);
+        }
+        .disliked-button{
+            border-radius:0px 30px 30px 0px;
+            font-size:14px;
+            padding: 4px 12px;
+            border:none;
+            color:red;
+            background-color:black;
+        }
+        .share-button{
+            background-color:rgb(194, 194, 194);
+            border-radius: 30px;
+            font-size:14px;
+            border:none;
+            padding: 4px 12px;
+        }
+        .playlist-button{
+            background-color:rgb(194, 194, 194);
+            color: black;
+            border-radius: 30px;
+            font-size:14px;
+            border:none;
+            padding: 9px 12px;
+        }
+        .suggestions{
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
+    @media(max-width:1200px) and (min-width:992px){
+        
+        .sugtitle{
+            font-size: 18px;
+            font-weight: 400;
+            line-height: 2px;
+        }
+        .suguser{
+            line-height: 5px;
+            font-size: 14px;
+        }
+        .sugdt{
+            display:none;
+        }
+    }

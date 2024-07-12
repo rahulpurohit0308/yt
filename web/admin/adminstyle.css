@@ -1,0 +1,45 @@
+.sidebar {
+    position: fixed;
+    height: 100%;
+    left: 0;
+    background-color: #f5f5f5;
+    overflow-y: auto;
+    transition: left 0.3s ease-in-out;
+    z-index: 5;
+    padding-top: 56px;
+}
+.sidebar.active {
+  left: 0;
+  width: 15%;
+}
+.content.active{
+    margin-left: 15%;
+    max-width:  85%;
+    transition: left 0.3s ease-in-out;
+}
+.menu-btn {
+  display: block;
+  float: left;
+  margin: 10px;
+  font-size: 20px;
+  background-color: transparent;
+  cursor: pointer;
+}
+.mainarea{
+    padding-top : 100px;
+}
+.sbopt{
+    height: 50px;
+    color:white;
+}
+.sbopt:hover{
+    background-color: white;
+    color: #333333;
+    cursor: pointer;
+}
+.sboption {
+    display: none;
+}
+.sidebar.active .sboption {
+  display: inline;
+}

@@ -1,0 +1,21 @@
+SMAP
+uploadvideo_jsp.java
+JSP
+*S JSP
+*F
++ 0 uploadvideo.jsp
+uploadvideo.jsp
++ 1 style.jsp
+style.jsp
+*L
+5,24:52
+28,8:76
+5#1,25:84
+35#0,26:108
+61:134,3
+62,15:137
+76:152
+77:153,6
+78,3:159
+80,29:162
+*E

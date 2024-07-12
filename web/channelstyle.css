@@ -1,0 +1,29 @@
+.heading1{
+    font-size: 35px;
+    font-family: sans-serif;
+    line-height: 25px;
+}
+.heading2{
+    font-size: 30px;
+    font-family: cursive;
+    line-height: 25px;
+}
+.heading3{
+    line-height:20px;
+}
+@media (max-width:768px){
+    .heading1{
+        font-size: 30px;
+    }
+    .heading2{
+        font-size: 20px;
+    }
+}
+@media (max-width:592px){
+    .heading2{
+        margin-left:20px;
+    }
+    .heading3{
+        margin-left:20px;
+    }
+}
