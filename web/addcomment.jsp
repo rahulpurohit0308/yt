@@ -12,10 +12,26 @@
                 <script src="jquery-3.6.4.min.js"></script>
                 <script>
                     $(document).ready(function(){
-                        $('.delcmnt').click(function(){
+                        $('.deletecmnt').click(function(){
                             var id = $(this).attr("rel");
                             $.post("deletecomment.jsp",{id:id});
                             $("#"+id).fadeOut(1000);                          
+                        })
+                        $('.editcmnt').click(function(){
+                            var id = $(this).attr("rel");
+                            $(this).addClass("d-none");
+                            $(".fixcomment").addClass("d-none");
+                            $(".editcomment1").removeClass("d-none");
+                            $(".updatecmnt").removeClass("d-none");
+                            $('.updatecmnt').click(function(){
+                                var comment = $(".editcomment1").val();
+                                $.post("updatecomment.jsp",{code:id,comment:comment});
+                                $(this).addClass("d-none");
+                                $(".fixcomment").removeClass("d-none");
+                                $(".fixcomment").val("comment");
+                                $(".editcomment1").addClass("d-none");
+                                $(".editcmnt").removeClass("d-none");
+                            })
                         })
                     })
                 </script>
@@ -27,6 +43,7 @@
     String video_code=request.getParameter("id");
     String user_code=request.getParameter("code");
     String comment=request.getParameter("cmnt");
+    String pc = request.getParameter("pc");
     String commentusername="";
         LinkedList l = new LinkedList();
         for(int i=0;i<=9;i++){
@@ -57,31 +74,28 @@
             }
             sn++;
             code=code+"_"+sn;
-            PreparedStatement ps = cn.prepareStatement("insert into comment values (?,?,?,?,?,?)");
+            PreparedStatement ps = cn.prepareStatement("insert into comment values (?,?,?,?,?,?,?)");
             ps.setInt(1,sn);
             ps.setString(2,code);
-            ps.setString(3,video_code);
-            ps.setString(4,user_code);
-            ps.setString(5,comment);
-            ps.setString(6,dt);
+            ps.setString(3,pc);
+            ps.setString(4,video_code);
+            ps.setString(5,user_code);
+            ps.setString(6,comment);
+            ps.setString(7,dt);
             if(ps.executeUpdate()>0){
 %>
-                <div class="row mt-3 comments" id="<%=code%>">
-                    <a href="channel.jsp?id=<%=user_code%>"><img src="userimages/<%=user_code%>.jpg" class="rounded-circle userimg ml-3"></a>
-                    <div class="col">
-                        <h6><%=commentusername%></h6>
-                        <p><%=comment%></p>
-                        <div class="row"><div class="cmntlikes mx-1">0 <i class="fa fa-thumbs-up likecmnt" data-commentcode="<%=code%>"></i></div>|<i class="fa fa-thumbs-down dislikecmnt mx-1"></i> | <label class="reply mx-1">Reply</label></div>
+                <div class="row mt-4" id="<%=code%>" style="justify-content:space-between">
+                    <div class="row ml-5">
+                        <a href="channel.jsp?id=<%=user_code%>"><img src="userimages/<%=user_code%>.jpg" style="height:50px;width:50px" class="rounded-circle"></a>
+                        <div class="mt-1">
+                            <h6 class="ml-3" style="line-height: 10px"><u><%=commentusername%></u></h6>
+                            <p class="ml-3 fixcomment"><%=comment%></p>
+                            <input class="underline-input editcomment1 d-none ml-3" value="<%=comment%>">
+                            <div class="row ml-3">0<span class="fa fa-thumbs-up mx-1 mt-1"></span>|<span class="fa fa-thumbs-down mx-1 mt-1"></span>|<span class="fa fa-reply mx-1 mt-1"></span></div>
+                        </div>
                     </div>
                     <div class="row">
-                        <span class="fa fa-pencil editcmnt mr-5" rel="<%=code%>"></span>
-                        <span class="fa fa-trash delcmnt mr-5" rel="<%=code%>"></span>
-                    </div>
-                    <div class="row col-12 cmntreply ml-5 d-none">
-                        <img src="userimages/<%=user_code%>.jpg" class="rounded-circle userimg ml-3">
-                        <input type="text" class="ml-4 cmntreply" data-commentid="<%=code%>" name="cmntreply" style="width: 50%">
-                        <button class="btn btn-secondary cancelreply ml-3">Cancel</button>
-                        <button class="btn btn-primary addcmntreply ml-3">Reply</button>
+                        <span class="fa fa-pencil editcmnt mr-3" id="<%=code%>"></span><span class="fa fa-check updatecmnt d-none mr-3" id="<%=code%>"></span><span class="fa fa-trash deletecmnt mx-5" rel="<%=code%>"></span>
                     </div>
                 </div>
         <%

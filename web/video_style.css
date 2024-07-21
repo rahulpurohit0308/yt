@@ -26,6 +26,8 @@
 }
 .like-button:hover{
     cursor:pointer;
+    color:white;
+    background-color: black;
 }
 .liked-button:hover{
     cursor:pointer;
@@ -47,6 +49,8 @@
 }
 .dislike-button:hover{
     cursor:pointer;
+    color:white;
+    background-color: black;
 }
 .disliked-button:hover{
     cursor:pointer;
@@ -96,164 +100,173 @@
 .darkeffect{
     opacity: 0.5;
 }         
-    @media(max-width:576px){
-        .like-button{
-            border-radius:30px 0px 0px 30px;
-            padding: 4px 12px;
-            border:none;
-            font-size:14px;
-            background-color:rgb(194, 194, 194);
-        }
-        .liked-button{
-            border-radius:30px 0px 0px 30px;
-            padding: 4px 12px;
-            border:none;
-            color:blue;
-            font-size:14px;
-            background-color:black;
-        }
-        .dislike-button{
-            border-radius:0px 30px 30px 0px;
-            font-size:14px;
-            padding: 4px 12px;
-            border:none;
-            background-color:rgb(194, 194, 194);
-        }
-        .disliked-button{
-            border-radius:0px 30px 30px 0px;
-            font-size:14px;
-            padding: 4px 12px;
-            border:none;
-            color: red;
-            background-color:black;
-        }
-        .share-button{
-            background-color:rgb(194, 194, 194);
-            border-radius: 30px;
-            font-size:14px;
-            border:none;
-            padding: 4px 12px;
-        }
-        .playlist-button{
-            background-color:rgb(194, 194, 194);
-            color: black;
-            border-radius: 30px;
-            font-size:14px;
-            border:none;
-            padding: 9px 12px;
-        }
+@media(max-width:576px){
+    .like-button{
+        border-radius:30px 0px 0px 30px;
+        padding: 4px 12px;
+        border:none;
+        font-size:14px;
+        background-color:rgb(194, 194, 194);
     }
-    @media(max-width:768px) and (min-width:576px){
-        .like-button{
-            border-radius:30px 0px 0px 30px;
-            padding: 4px 12px;
-            border:none;
-            font-size:14px;
-            background-color:rgb(194, 194, 194);
-            margin-left: 340px;
-        }
-        .liked-button{
-            border-radius:30px 0px 0px 30px;
-            padding: 4px 12px;
-            border:none;
-            color:blue;
-            font-size:14px;
-            background-color:black;
-        }
-        .dislike-button{
-            border-radius:0px 30px 30px 0px;
-            font-size:14px;
-            padding: 4px 12px;
-            border:none;
-            background-color:rgb(194, 194, 194);
-        }
-        .disliked-button{
-            border-radius:0px 30px 30px 0px;
-            font-size:14px;
-            padding: 4px 12px;
-            border:none;
-            color:red;
-            background-color:black;
-        }
-        .share-button{
-            background-color:rgb(194, 194, 194);
-            border-radius: 30px;
-            font-size:14px;
-            border:none;
-            padding: 4px 12px;
-        }
-        .playlist-button{
-            background-color:rgb(194, 194, 194);
-            color: black;
-            border-radius: 30px;
-            font-size:14px;
-            border:none;
-            padding: 9px 12px;
-        }
+    .liked-button{
+        border-radius:30px 0px 0px 30px;
+        padding: 4px 12px;
+        border:none;
+        color:blue;
+        font-size:14px;
+        background-color:black;
     }
-    @media(max-width:992px) and (min-width:768px){
-        .like-button{
-            border-radius:30px 0px 0px 30px;
-            padding: 4px 12px;
-            border:none;
-            font-size:14px;
-            background-color:rgb(194, 194, 194);
-        }
-        .liked-button{
-            border-radius:30px 0px 0px 30px;
-            padding: 4px 12px;
-            border:none;
-            font-size:14px;
-            color:blue;
-            background-color:black;
-        }
-        .dislike-button{
-            border-radius:0px 30px 30px 0px;
-            font-size:14px;
-            padding: 4px 12px;
-            border:none;
-            background-color:rgb(194, 194, 194);
-        }
-        .disliked-button{
-            border-radius:0px 30px 30px 0px;
-            font-size:14px;
-            padding: 4px 12px;
-            border:none;
-            color:red;
-            background-color:black;
-        }
-        .share-button{
-            background-color:rgb(194, 194, 194);
-            border-radius: 30px;
-            font-size:14px;
-            border:none;
-            padding: 4px 12px;
-        }
-        .playlist-button{
-            background-color:rgb(194, 194, 194);
-            color: black;
-            border-radius: 30px;
-            font-size:14px;
-            border:none;
-            padding: 9px 12px;
-        }
-        .suggestions{
-            margin-left: auto;
-            margin-right: auto;
-        }
+    .dislike-button{
+        border-radius:0px 30px 30px 0px;
+        font-size:14px;
+        padding: 4px 12px;
+        border:none;
+        background-color:rgb(194, 194, 194);
     }
-    @media(max-width:1200px) and (min-width:992px){
-        
-        .sugtitle{
-            font-size: 18px;
-            font-weight: 400;
-            line-height: 2px;
-        }
-        .suguser{
-            line-height: 5px;
-            font-size: 14px;
-        }
-        .sugdt{
-            display:none;
-        }
+    .disliked-button{
+        border-radius:0px 30px 30px 0px;
+        font-size:14px;
+        padding: 4px 12px;
+        border:none;
+        color: red;
+        background-color:black;
     }
+    .share-button{
+        background-color:rgb(194, 194, 194);
+        border-radius: 30px;
+        font-size:14px;
+        border:none;
+        padding: 4px 12px;
+    }
+    .playlist-button{
+        background-color:rgb(194, 194, 194);
+        color: black;
+        border-radius: 30px;
+        font-size:14px;
+        border:none;
+        padding: 9px 12px;
+    }
+}
+@media(max-width:768px) and (min-width:576px){
+    .like-button{
+        border-radius:30px 0px 0px 30px;
+        padding: 4px 12px;
+        border:none;
+        font-size:14px;
+        background-color:rgb(194, 194, 194);
+    }
+    .liked-button{
+        border-radius:30px 0px 0px 30px;
+        padding: 4px 12px;
+        border:none;
+        color:blue;
+        font-size:14px;
+        background-color:black;
+    }
+    .dislike-button{
+        border-radius:0px 30px 30px 0px;
+        font-size:14px;
+        padding: 4px 12px;
+        border:none;
+        background-color:rgb(194, 194, 194);
+    }
+    .disliked-button{
+        border-radius:0px 30px 30px 0px;
+        font-size:14px;
+        padding: 4px 12px;
+        border:none;
+        color:red;
+        background-color:black;
+    }
+    .share-button{
+        background-color:rgb(194, 194, 194);
+        border-radius: 30px;
+        font-size:14px;
+        border:none;
+        padding: 4px 12px;
+    }
+    .playlist-button{
+        background-color:rgb(194, 194, 194);
+        color: black;
+        border-radius: 30px;
+        font-size:14px;
+        border:none;
+        padding: 9px 12px;
+    }
+}
+@media(max-width:992px) and (min-width:768px){
+    .like-button{
+        border-radius:30px 0px 0px 30px;
+        padding: 4px 12px;
+        border:none;
+        font-size:14px;
+        background-color:rgb(194, 194, 194);
+    }
+    .liked-button{
+        border-radius:30px 0px 0px 30px;
+        padding: 4px 12px;
+        border:none;
+        font-size:14px;
+        color:blue;
+        background-color:black;
+    }
+    .dislike-button{
+        border-radius:0px 30px 30px 0px;
+        font-size:14px;
+        padding: 4px 12px;
+        border:none;
+        background-color:rgb(194, 194, 194);
+    }
+    .disliked-button{
+        border-radius:0px 30px 30px 0px;
+        font-size:14px;
+        padding: 4px 12px;
+        border:none;
+        color:red;
+        background-color:black;
+    }
+    .share-button{
+        background-color:rgb(194, 194, 194);
+        border-radius: 30px;
+        font-size:14px;
+        border:none;
+        padding: 4px 12px;
+    }
+    .playlist-button{
+        background-color:rgb(194, 194, 194);
+        color: black;
+        border-radius: 30px;
+        font-size:14px;
+        border:none;
+        padding: 9px 12px;
+    }
+    .suggestions{
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+@media(max-width:1200px) and (min-width:992px){
+
+    .sugtitle{
+        font-size: 18px;
+        font-weight: 400;
+        line-height: 2px;
+    }
+    .suguser{
+        line-height: 5px;
+        font-size: 14px;
+    }
+    .sugdt{
+        display:none;
+    }
+}
+.underline-input {
+    border-bottom: 2px solid #000;
+    outline: none;
+    padding: 8px 0;
+    font-size: 16px;
+}
+
+.underline-input:focus {
+    border-bottom-color: #000 !important;
+}

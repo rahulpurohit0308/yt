@@ -4,6 +4,7 @@
         String playlist = request.getParameter("playlist");
         String privacy = request.getParameter("privacy");
         String usercode = request.getParameter("usercode");
+        String dt = new java.util.Date() + "";        
         int sn=0;
         String code="";
         LinkedList l = new LinkedList();
@@ -29,13 +30,15 @@
         }
         sn++;
         code=code+"_"+sn;
-        PreparedStatement ps1=cn.prepareStatement("insert into playlist values (?,?,?,?,?)");
+        PreparedStatement ps1=cn.prepareStatement("insert into playlist values (?,?,?,?,?,?)");
         ps1.setInt(1,sn);
         ps1.setString(2,code);
-        ps1.setString(3,usercode);
-        ps1.setString(4,playlist);
-        ps1.setString(5,privacy);
+        ps1.setString(3,dt);
+        ps1.setString(4,usercode);
+        ps1.setString(5,playlist);
+        ps1.setString(6,privacy);
         ps1.executeUpdate();
+        out.print(playlist);
     } catch (Exception er) {
         out.println(er.getMessage());
     }

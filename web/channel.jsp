@@ -195,7 +195,7 @@
             <div class="playlists-section" style="display: none;">
                 <div class="row mt-2">
 <%
-                ResultSet rs8 = st.executeQuery("select distinct * from playlist where user_code='"+code+"' AND privacy = 'public'");
+                ResultSet rs8 = st.executeQuery("select distinct * from playlist where usercode='"+code+"' AND privacy = 'public'");
                 while(rs8.next()){
 %>
                     <div class="col-sm-6 col-md-4 col-lg-3 col-xl-3">

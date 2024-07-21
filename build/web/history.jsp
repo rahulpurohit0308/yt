@@ -38,7 +38,7 @@
         <jsp:include page="navbar.jsp" />
         <div class="container-fluid content">
             <jsp:include page="sidebar.jsp" />
-            <div class="mainarea mt-2">
+            <div class="mainarea mt-2 ml-2">
 <%
         if(email!=null){
 %>

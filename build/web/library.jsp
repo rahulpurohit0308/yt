@@ -37,7 +37,7 @@
         <jsp:include page="navbar.jsp" />
         <div class="container-fluid content">
             <jsp:include page="sidebar.jsp" />
-            <div class="mainarea ml-2 mt-2">
+            <div class="mainarea mt-2">
 <%
     ResultSet rs4 = st.executeQuery("select count(*) as p from playlist where usercode='"+code+"' and privacy='public'");   
     if(rs4.next()){
@@ -57,6 +57,7 @@
                         </a>
                         <div class="text-center mt-1">
                             <a class="text-dark" href="playlist.jsp?id=<%=rs2.getString("code")%>"><h6><%=rs2.getString("playlist")%></h6></a>
+                            <p><%=rs2.getString("dt")%></p>
                         </div>
                     </div>
 <%
@@ -83,6 +84,7 @@
                         </a>
                         <div class="text-center mt-1">
                             <a class="text-dark" href="playlist.jsp?id=<%=rs3.getString("code")%>"><h6><%=rs3.getString("playlist")%></h6></a>
+                            <p><%=rs3.getString("dt")%></p>
                         </div>
                     </div>
 <%

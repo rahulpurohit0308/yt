@@ -152,7 +152,28 @@
                         <button class="btn btn-danger" id="submit" data-dismiss="modal">Login</button><br>
                     </div>
                     <div class="modal-footer">
-                        <span>Don't have an account <i style="color:red;cursor:pointer" id="sg" data-dismiss="modal" >Sign Up</i></span>
+                        <span>Don't have an account <i style="color:red;cursor:pointer" id="sg" data-dismiss="modal">Sign Up</i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal" id="signup">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Sign Up</h4>
+                        <button type="button" class="close" data-dismiss="modal" style="color:black">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="lg_msg"></div>
+                        <label>Email</label>
+                        <input type="text" id="email" class="form-control"><br>
+                        <label>Password</label>
+                        <input type="password" id="pass" class="form-control"><br>
+                        <button class="btn btn-danger" id="submit" data-dismiss="modal">Login</button><br>
+                    </div>
+                    <div class="modal-footer">
+                        <span>Don't have an account <i style="color:red;cursor:pointer" id="sg" data-dismiss="modal">Sign Up</i></span>
                     </div>
                 </div>
             </div>

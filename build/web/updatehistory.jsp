@@ -5,7 +5,6 @@
       String email=null;
       String date = new java.util.Date() + "";
       String usercode=request.getParameter("usercode");
-      out.print(date+" "+usercode);
       String code1=request.getParameter("vidcode");
       for(int i=0;i<c.length;i++){
           if(c[i].getName().equals("login")){
@@ -46,4 +45,4 @@
   catch(Exception e){
       out.println(e.getMessage());
   }  
-%>);
+%>
