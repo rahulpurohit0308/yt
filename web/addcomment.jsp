@@ -12,25 +12,26 @@
                 <script src="jquery-3.6.4.min.js"></script>
                 <script>
                     $(document).ready(function(){
-                        $('.deletecmnt').click(function(){
+                        $('.deletecmnt1').click(function(){
                             var id = $(this).attr("rel");
                             $.post("deletecomment.jsp",{id:id});
                             $("#"+id).fadeOut(1000);                          
                         })
-                        $('.editcmnt').click(function(){
+                        $('.editcmnt1').click(function(){
                             var id = $(this).attr("rel");
                             $(this).addClass("d-none");
-                            $(".fixcomment").addClass("d-none");
+                            $(".fixcomment1").addClass("d-none");
                             $(".editcomment1").removeClass("d-none");
-                            $(".updatecmnt").removeClass("d-none");
-                            $('.updatecmnt').click(function(){
+                            $(".editcomment1").focus();
+                            $(".updatecmnt1").removeClass("d-none");
+                            $('.updatecmnt1').click(function(){
                                 var comment = $(".editcomment1").val();
                                 $.post("updatecomment.jsp",{code:id,comment:comment});
                                 $(this).addClass("d-none");
-                                $(".fixcomment").removeClass("d-none");
-                                $(".fixcomment").val("comment");
+                                $(".fixcomment1").removeClass("d-none");
+                                $(".fixcomment1").text(comment);
                                 $(".editcomment1").addClass("d-none");
-                                $(".editcmnt").removeClass("d-none");
+                                $(".editcmnt1").removeClass("d-none");
                             })
                         })
                     })
@@ -74,14 +75,13 @@
             }
             sn++;
             code=code+"_"+sn;
-            PreparedStatement ps = cn.prepareStatement("insert into comment values (?,?,?,?,?,?,?)");
+            PreparedStatement ps = cn.prepareStatement("insert into comment values (?,?,?,?,?,?)");
             ps.setInt(1,sn);
             ps.setString(2,code);
             ps.setString(3,pc);
             ps.setString(4,video_code);
             ps.setString(5,user_code);
             ps.setString(6,comment);
-            ps.setString(7,dt);
             if(ps.executeUpdate()>0){
 %>
                 <div class="row mt-4" id="<%=code%>" style="justify-content:space-between">
@@ -89,21 +89,67 @@
                         <a href="channel.jsp?id=<%=user_code%>"><img src="userimages/<%=user_code%>.jpg" style="height:50px;width:50px" class="rounded-circle"></a>
                         <div class="mt-1">
                             <h6 class="ml-3" style="line-height: 10px"><u><%=commentusername%></u></h6>
-                            <p class="ml-3 fixcomment"><%=comment%></p>
+                            <p class="ml-3 fixcomment1"><%=comment%></p>
                             <input class="underline-input editcomment1 d-none ml-3" value="<%=comment%>">
-                            <div class="row ml-3">0<span class="fa fa-thumbs-up mx-1 mt-1"></span>|<span class="fa fa-thumbs-down mx-1 mt-1"></span>|<span class="fa fa-reply mx-1 mt-1"></span></div>
+                            <div class="row ml-3"><div class="likes1">0</div><span class="fa fa-thumbs-up likecmnt1 mx-1 mt-1" rel="<%=code%>"></span>|<span class="fa fa-thumbs-down dislikecmnt1 mx-1 mt-1" rel="<%=code%>"></span>|<span class="fa fa-reply mx-1 mt-1"></span></div>
                         </div>
                     </div>
                     <div class="row">
-                        <span class="fa fa-pencil editcmnt mr-3" id="<%=code%>"></span><span class="fa fa-check updatecmnt d-none mr-3" id="<%=code%>"></span><span class="fa fa-trash deletecmnt mx-5" rel="<%=code%>"></span>
+                        <span class="fa fa-pencil editcmnt1 mr-3" rel="<%=code%>"></span><span class="fa fa-check updatecmnt1 d-none mr-3" rel="<%=code%>"></span><span class="fa fa-trash deletecmnt1 mx-5" rel="<%=code%>"></span>
                     </div>
                 </div>
-        <%
+            <script>
+                $(document).ready(function(){
+                    var usercode = "<%=user_code%>";
+                    $(".likecmnt1").click(function(){
+                        var id = $(this).attr("rel");
+                        $.post("commentlike.jsp",{commentcode:id,usercode:usercode},function(data){
+                            if(data==1){
+                                var likes = Number($(".likes1").text());
+                                $(".likes1").text(likes+1);
+                                $(".likecmnt1").addClass("text-primary");
+                                $(".dislikecmnt1").removeClass("text-danger");
+                            }
+                            else{
+                                var likes = Number($(".likes1").text());
+                                $(".likes1").text(likes-1);
+                                $(".likecmnt1").removeClass("text-primary");
+                                $(".dislikecmnt1").removeClass("text-danger");
+                            }
+                        });
+                    })
+                    $(".dislikecmnt1").click(function(){
+                        var id = $(this).attr("rel");
+                        $.post("commentdislike.jsp",{commentcode:id,usercode:usercode},function(data){
+                            if(data==0){
+                                var likes = Number($(".likes1").text());
+                                $(".likes1").text(likes);
+                                $(".likecmnt1").removeClass("text-primary");
+                                $(".dislikecmnt1").addClass("text-danger");
+                            }
+                            else if(data==1){
+                                var likes = Number($(".likes1").text());
+                                $(".likes1").text(likes-1);
+                                $(".likecmnt1").removeClass("text-primary");
+                                $(".dislikecmnt1").addClass("text-danger");
+                            }
+                            else{
+                                var likes = Number($("likes1"+id).text());
+                                $(".likes1").text(likes);
+                                $(".likecmnt1").removeClass("text-primary");
+                                $(".dislikecmnt1").removeClass("text-danger");
+                            }
+                        });
+                    })
+                })
+                
+            </script>
+            </body>
+        </html>
+<%
             };
         }
         catch(Exception er){
             out.println(er.getMessage());
         }
 %>
-            </body>
-        </html>

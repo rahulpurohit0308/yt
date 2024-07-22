@@ -172,6 +172,7 @@
                         $.post("addcomment.jsp",{pc:0,id:vidcode,code:usercode,cmnt:comment},function(data){
                             $(".commentss").prepend(data);
                         });
+                        $(".comment").val("");
                     }
                 })
             })
@@ -289,7 +290,7 @@
         ResultSet rs11 = st.executeQuery("select * from comment where vidcode='"+code+"' and parent_code='"+0+"'");
         while(rs11.next()){
 %>
-                            <div class="row mt-4" style="justify-content:space-between">
+                            <div class="row mt-4" id="<%=rs11.getString("code")%>" style="justify-content:space-between">
                                 <div class="row ml-5">
                                     <img src="userimages/<%=rs11.getString("usercode")%>.jpg" style="height:50px;width:50px" class="rounded-circle">
                                     <div class="mt-1">
@@ -301,15 +302,40 @@
 <%
             }
 %>
-                                        <p class="ml-3"><%=rs11.getString("comment")%></p>
-                                        <div class="row ml-3">0<span class="fa fa-thumbs-up mx-1 mt-1"></span>|<span class="fa fa-thumbs-down mx-1 mt-1"></span>|<span class="fa fa-reply mx-1 mt-1"></span></div>
+                                        <p class="ml-3 fixcomment<%=rs11.getString("code")%>"><%=rs11.getString("comment")%></p>
+                                        <input class="underline-input editcomment<%=rs11.getString("code")%> d-none ml-3" value="<%=rs11.getString("comment")%>">
+<%
+            int commentlikes=0;
+            ResultSet rs13 = st1.executeQuery("select count(*) as n from commentlikes where commentcode='"+rs11.getString("code")+"' and status=1");
+            if(rs13.next()){
+                commentlikes=rs13.getInt("n");
+            }
+            ResultSet rs14 = st1.executeQuery("select * from commentlikes where commentcode='"+rs11.getString("code")+"' and usercode='"+usercode+"'");
+            if(rs14.next()){
+                if(rs14.getInt("status")==1){
+%>
+                    <div class="row ml-3"><div class="likes likes<%=rs11.getString("code")%>"><%=commentlikes%></div><span class="fa fa-thumbs-up likecmnt likecmnt<%=rs11.getString("code")%> text-primary mx-1 mt-1" rel="<%=rs11.getString("code")%>"></span>|<span class="fa fa-thumbs-down dislikecmnt dislikecmnt<%=rs11.getString("code")%> mx-1 mt-1" rel="<%=rs11.getString("code")%>"></span>|<span class="fa fa-reply replycmnt replycmnt<%=rs11.getString("code")%> mx-1 mt-1" rel="<%=rs11.getString("code")%>"></span></div>
+<%                  
+                }
+                else if(rs14.getInt("status")==0){
+%>
+                    <div class="row ml-3"><div class="likes likes<%=rs11.getString("code")%>"><%=commentlikes%></div><span class="fa fa-thumbs-up likecmnt likecmnt<%=rs11.getString("code")%> mx-1 mt-1" rel="<%=rs11.getString("code")%>"></span>|<span class="fa fa-thumbs-down dislikecmnt dislikecmnt<%=rs11.getString("code")%> text-danger mx-1 mt-1" rel="<%=rs11.getString("code")%>"></span>|<span class="fa fa-reply replycmnt replycmnt<%=rs11.getString("code")%> mx-1 mt-1" rel="<%=rs11.getString("code")%>"></span></div>
+<%
+                }
+            }
+            else{
+%>
+                    <div class="row ml-3"><div class="likes likes<%=rs11.getString("code")%>"><%=commentlikes%></div><span class="fa fa-thumbs-up likecmnt likecmnt<%=rs11.getString("code")%> mx-1 mt-1" rel="<%=rs11.getString("code")%>"></span>|<span class="fa fa-thumbs-down dislikecmnt dislikecmnt<%=rs11.getString("code")%> mx-1 mt-1" rel="<%=rs11.getString("code")%>"></span>|<span class="fa fa-reply replycmnt replycmnt<%=rs11.getString("code")%> mx-1 mt-1" rel="<%=rs11.getString("code")%>"></span></div>
+<%
+            }
+%>
                                     </div>
                                 </div>
 <%
             if(rs11.getString("usercode").equals(usercode)){
 %>
                                 <div class="row">
-                                    <span class="fa fa-pencil mr-3"></span><span class="fa fa-trash mx-5"></span>
+                                    <span class="fa fa-pencil editcmnt editcmnt<%=rs11.getString("code")%> mr-3" rel="<%=rs11.getString("code")%>"></span><span class="fa fa-check d-none updatecmnt updatecmnt<%=rs11.getString("code")%> mr-3" rel="<%=rs11.getString("code")%>"></span><span class="fa fa-trash deletecmnt deletecmnt<%=rs11.getString("code")%> mx-5" rel="<%=rs11.getString("code")%>"></span>
                                 </div>
 <%
             }
@@ -413,6 +439,76 @@
                 </div>
             </div>
         </div>
+        <script>
+            $(document).ready(function(){
+                var email = "<%=email%>";
+                var usercode = "<%=usercode%>";
+                var channelcode = "<%=usercode1%>";
+                var vidcode = "<%=code%>";
+                $('.deletecmnt').click(function(){
+                    var id = $(this).attr("rel");
+                    $.post("deletecomment.jsp",{id:id});
+                    $("#"+id).fadeOut(1000);                          
+                })
+                $(".editcmnt").click(function(){
+                    var id = $(this).attr("rel");
+                    $(this).addClass("d-none");
+                    $(".fixcomment"+id).addClass("d-none");
+                    $(".editcomment"+id).removeClass("d-none");
+                    $(".editcomment"+id).focus();
+                    $(".updatecmnt"+id).removeClass("d-none");
+                    $('.updatecmnt'+id).click(function(){
+                        var comment = $(".editcomment"+id).val();
+                        $.post("updatecomment.jsp",{code:id,comment:comment});
+                        $(this).addClass("d-none");
+                        $(".fixcomment"+id).removeClass("d-none");
+                        $(".fixcomment"+id).text(comment);
+                        $(".editcomment"+id).addClass("d-none");
+                        $(".editcmnt"+id).removeClass("d-none");
+                    })
+                })
+                $(".likecmnt").click(function(){
+                    var id = $(this).attr("rel");
+                    $.post("commentlike.jsp",{commentcode:id,usercode:usercode},function(data){
+                        if(data==1){
+                            var likes = Number($(".likes"+id).text());
+                            $(".likes"+id).text(likes+1);
+                            $(".likecmnt"+id).addClass("text-primary");
+                            $(".dislikecmnt"+id).removeClass("text-danger");
+                        }
+                        else{
+                            var likes = Number($(".likes"+id).text());
+                            $(".likes"+id).text(likes-1);
+                            $(".likecmnt"+id).removeClass("text-primary");
+                            $(".dislikecmnt"+id).removeClass("text-danger");
+                        }
+                    });
+                })
+                $(".dislikecmnt").click(function(){
+                    var id = $(this).attr("rel");
+                    $.post("commentdislike.jsp",{commentcode:id,usercode:usercode},function(data){
+                        if(data==0){
+                            var likes = Number($(".likes"+id).text());
+                            $(".likes"+id).text(likes);
+                            $(".likecmnt"+id).removeClass("text-primary");
+                            $(".dislikecmnt"+id).addClass("text-danger");
+                        }
+                        else if(data==1){
+                            var likes = Number($(".likes"+id).text());
+                            $(".likes"+id).text(likes-1);
+                            $(".likecmnt"+id).removeClass("text-primary");
+                            $(".dislikecmnt"+id).addClass("text-danger");
+                        }
+                        else{
+                            var likes = Number($(".likes"+id).text());
+                            $(".likes"+id).text(likes);
+                            $(".likecmnt"+id).removeClass("text-primary");
+                            $(".dislikecmnt"+id).removeClass("text-danger");
+                        }
+                    });
+                })
+            })
+        </script>
     </body>
 </html>
 <%
