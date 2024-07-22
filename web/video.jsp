@@ -341,6 +341,65 @@
             }
 %>
                             </div>
+                            <div class="replydiv replydiv<%=rs11.getString("code")%> d-none ml-5 pl-5 mt-2" id="<%=rs11.getString("code")%>">
+                                <img src="userimages/<%=usercode%>.jpg" style="height:40px;width:40px" class="rounded-circle">
+                                <input class="underline-input creply creply<%=rs11.getString("code")%> ml-3" id="<%=rs11.getString("code")%>" style="width: 60%" placeholder="Add reply...">
+                                <button class="btn btn-secondary ccanbtn ccanbtn<%=rs11.getString("code")%> ml-2" id="<%=rs11.getString("code")%>">Cancel</button>
+                                <button class="btn btn-primary creplybtn creplybtn<%=rs11.getString("code")%> ml-2" id="<%=rs11.getString("code")%>">Reply</button>
+                            </div>
+<%
+            ResultSet rs15 = st1.executeQuery("select count(*) as p from comment where parent_code='"+rs11.getString("code")+"'");
+            if(rs15.next()){
+                if(rs15.getInt("p")>1){
+%>
+                            <span class="fa fa-sort-asc replies repliesasc<%=rs11.getString("code")%> d-none ml-5 mt-2" rel="<%=rs11.getString("code")%>"> <%=rs15.getInt("p")%> Replies</span>
+                            <span class="fa fa-sort-desc replies repliesdesc<%=rs11.getString("code")%> ml-5 mt-2" rel="<%=rs11.getString("code")%>"> <%=rs15.getInt("p")%> Replies</span>
+<%
+                }
+                else if(rs15.getInt("p")==1){
+%>
+                            <span class="fa fa-sort-asc replies repliesasc<%=rs11.getString("code")%> d-none ml-5 mt-2" rel="<%=rs11.getString("code")%>"> 1 Reply</span>
+                            <span class="fa fa-sort-desc replies repliesdesc<%=rs11.getString("code")%> ml-5 mt-2" rel="<%=rs11.getString("code")%>"> 1 Reply</span>
+<%
+                }
+            }
+%>
+                            <div class="cmntrepliessec cmntrepliessec<%=rs11.getString("code")%> d-none" id="<%=rs11.getString("code")%>">
+<%
+            ResultSet rs16 = st1.executeQuery("select * from comment where parent_code='"+rs11.getString("code")+"'");
+            while(rs16.next()){
+%>
+                                <div class="row mt-4" id="<%=rs16.getString("code")%>" style="justify-content:space-between">
+                                    <div class="row ml-5 pl-5">
+                                        <img src="userimages/<%=rs16.getString("usercode")%>.jpg" style="height:50px;width:50px" class="rounded-circle">
+                                        <div class="mt-1">
+<%
+                ResultSet rs17 = st2.executeQuery("select * from users where code='"+rs16.getString("usercode")+"'");
+                if(rs17.next()){                
+%>
+                                            <h6 class="ml-3" style="line-height: 10px"><u><%=rs17.getString("name")%></u></h6>
+<%
+                }
+%>
+                                            <p class="ml-3 fixcomment<%=rs16.getString("code")%>"><%=rs16.getString("comment")%></p>
+                                            <input class="underline-input editcomment<%=rs16.getString("code")%> d-none ml-3" value="<%=rs16.getString("comment")%>">
+                                            <div class="row ml-3"><div class="likes likes<%=rs16.getString("code")%>"><%=commentlikes%></div><span class="fa fa-thumbs-up likecmnt likecmnt<%=rs11.getString("code")%> mx-1 mt-1" rel="<%=rs11.getString("code")%>"></span>|<span class="fa fa-thumbs-down dislikecmnt dislikecmnt<%=rs11.getString("code")%> mx-1 mt-1" rel="<%=rs11.getString("code")%>"></span>|<span class="fa fa-reply replycmnt replycmnt<%=rs11.getString("code")%> mx-1 mt-1" rel="<%=rs11.getString("code")%>"></span></div>
+                                        </div>
+                                    </div>
+<%
+                if(rs16.getString("usercode").equals(usercode)){
+%>
+                                    <div class="row">
+                                        <span class="fa fa-pencil editcmnt editcmnt<%=rs11.getString("code")%> mr-3" rel="<%=rs11.getString("code")%>"></span><span class="fa fa-check d-none updatecmnt updatecmnt<%=rs11.getString("code")%> mr-3" rel="<%=rs11.getString("code")%>"></span><span class="fa fa-trash deletecmnt deletecmnt<%=rs11.getString("code")%> mx-5" rel="<%=rs11.getString("code")%>"></span>
+                                    </div>
+<%
+                }
+%>
+                                </div>
+<%
+            }
+%>
+                            </div>
 <%
         }
 %>
@@ -468,44 +527,78 @@
                     })
                 })
                 $(".likecmnt").click(function(){
-                    var id = $(this).attr("rel");
-                    $.post("commentlike.jsp",{commentcode:id,usercode:usercode},function(data){
-                        if(data==1){
-                            var likes = Number($(".likes"+id).text());
-                            $(".likes"+id).text(likes+1);
-                            $(".likecmnt"+id).addClass("text-primary");
-                            $(".dislikecmnt"+id).removeClass("text-danger");
-                        }
-                        else{
-                            var likes = Number($(".likes"+id).text());
-                            $(".likes"+id).text(likes-1);
-                            $(".likecmnt"+id).removeClass("text-primary");
-                            $(".dislikecmnt"+id).removeClass("text-danger");
-                        }
-                    });
+                    if(email=="null"){
+                        $("#login").modal();
+                    }
+                    else{
+                        var id = $(this).attr("rel");
+                        $.post("commentlike.jsp",{commentcode:id,usercode:usercode},function(data){
+                            if(data==1){
+                                var likes = Number($(".likes"+id).text());
+                                $(".likes"+id).text(likes+1);
+                                $(".likecmnt"+id).addClass("text-primary");
+                                $(".dislikecmnt"+id).removeClass("text-danger");
+                            }
+                            else{
+                                var likes = Number($(".likes"+id).text());
+                                $(".likes"+id).text(likes-1);
+                                $(".likecmnt"+id).removeClass("text-primary");
+                                $(".dislikecmnt"+id).removeClass("text-danger");
+                            }
+                        });
+                    }
                 })
                 $(".dislikecmnt").click(function(){
+                    if(email=="null"){
+                        $("#login").modal();
+                    }
+                    else{
                     var id = $(this).attr("rel");
-                    $.post("commentdislike.jsp",{commentcode:id,usercode:usercode},function(data){
-                        if(data==0){
-                            var likes = Number($(".likes"+id).text());
-                            $(".likes"+id).text(likes);
-                            $(".likecmnt"+id).removeClass("text-primary");
-                            $(".dislikecmnt"+id).addClass("text-danger");
-                        }
-                        else if(data==1){
-                            var likes = Number($(".likes"+id).text());
-                            $(".likes"+id).text(likes-1);
-                            $(".likecmnt"+id).removeClass("text-primary");
-                            $(".dislikecmnt"+id).addClass("text-danger");
-                        }
-                        else{
-                            var likes = Number($(".likes"+id).text());
-                            $(".likes"+id).text(likes);
-                            $(".likecmnt"+id).removeClass("text-primary");
-                            $(".dislikecmnt"+id).removeClass("text-danger");
-                        }
-                    });
+                        $.post("commentdislike.jsp",{commentcode:id,usercode:usercode},function(data){
+                            if(data==0){
+                                var likes = Number($(".likes"+id).text());
+                                $(".likes"+id).text(likes);
+                                $(".likecmnt"+id).removeClass("text-primary");
+                                $(".dislikecmnt"+id).addClass("text-danger");
+                            }
+                            else if(data==1){
+                                var likes = Number($(".likes"+id).text());
+                                $(".likes"+id).text(likes-1);
+                                $(".likecmnt"+id).removeClass("text-primary");
+                                $(".dislikecmnt"+id).addClass("text-danger");
+                            }
+                            else{
+                                var likes = Number($(".likes"+id).text());
+                                $(".likes"+id).text(likes);
+                                $(".likecmnt"+id).removeClass("text-primary");
+                                $(".dislikecmnt"+id).removeClass("text-danger");
+                            }
+                        });
+                    }
+                })
+                $(".replycmnt").click(function(){
+                    if(email=="null"){
+                        $("#login").modal();
+                    }
+                    else{
+                        var id = $(this).attr("rel");
+                        $(".replydiv"+id).removeClass("d-none");
+                        $(".creply"+id).focus();
+                        $(".ccanbtn"+id).click(function(){
+                            $(".replydiv"+id).addClass("d-none");
+                        })
+                        $(".creplybtn"+id).click(function(){
+                            var reply = $(".creply"+id).val();
+                            $(".replydiv"+id).addClass("d-none");
+                            $.post("addcmntreply.jsp",{id:id,vidcode:vidcode,code:usercode,cmntreply:reply});
+                        })
+                    }
+                })
+                $(".replies").click(function(){
+                    var id = $(this).attr("rel");
+                    $(".repliesasc"+id).toggleClass("d-none");
+                    $(".repliesdesc"+id).toggleClass("d-none");
+                    $(".cmntrepliessec"+id).toggleClass("d-none");
                 })
             })
         </script>
