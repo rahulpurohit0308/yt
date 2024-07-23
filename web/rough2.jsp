@@ -4,8 +4,3 @@
     <button class="btn btn-secondary cancelreply ml-3">Cancel</button>
     <button class="btn btn-primary addcmntreply ml-3">Reply</button>
 </div>
-    
-    
-    
-
-    
