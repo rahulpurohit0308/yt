@@ -6,6 +6,7 @@
     String descrip="";
     String code = request.getParameter("id");
     int likevidstatus=2;
+    int videolikes=0;
     Cookie c[]=request.getCookies();
     for(int i=0; i<c.length; i++){
         if(c[i].getName().equals("login")){
@@ -19,6 +20,7 @@
         Statement st=cn.createStatement();
         Statement st1=cn.createStatement();
         Statement st2=cn.createStatement();
+        Statement st3=cn.createStatement();
         ResultSet rs7 = st.executeQuery("select * from users where email='"+email+"'");
         if(rs7.next()){
             usercode = rs7.getString("code");
@@ -76,18 +78,21 @@
                         $("#login").modal();
                     }
                     else{
+                        var likes = Number($(".vidlikescount").text());
                         $.post("like.jsp",{usercode:usercode,vidcode:vidcode},function(data){
                             if(data==1){
                                 $(".likevid").addClass("liked-button");
                                 $(".likevid").removeClass("like-button");
                                 $(".dislikevid").addClass("dislike-button");
                                 $(".dislikevid").removeClass("disliked-button");
+                                $(".vidlikescount").text(likes+1);
                             }
                             else{
                                 $(".likevid").addClass("like-button");
                                 $(".likevid").removeClass("liked-button");
                                 $(".dislikevid").addClass("dislike-button");
                                 $(".dislikevid").removeClass("disliked-button");
+                                $(".vidlikescount").text(likes-1);
                             }
                         })
                     }
@@ -103,6 +108,14 @@
                                 $(".dislikevid").removeClass("dislike-button");
                                 $(".likevid").addClass("like-button");
                                 $(".likevid").removeClass("liked-button");
+                            }
+                            else if(data==1){
+                                var likes = Number($(".vidlikescount").text());
+                                $(".dislikevid").addClass("disliked-button");
+                                $(".dislikevid").removeClass("dislike-button");
+                                $(".likevid").addClass("like-button");
+                                $(".likevid").removeClass("liked-button");
+                                $(".vidlikescount").text(likes-1);
                             }
                             else{
                                 $(".dislikevid").addClass("dislike-button");
@@ -215,21 +228,25 @@
                 if(rs8.next()){
                     likevidstatus = rs8.getInt("status");
                 }
+                ResultSet rs20 = st3.executeQuery("select count(*) as p from likes where vidcode='"+code+"'");
+                if(rs20.next()){
+                    videolikes = rs20.getInt("p");
+                }
                 if (likevidstatus==1){
 %>
-                                <button class="likevid liked-button"><i class="fa fa-thumbs-up"></i></button>
+                                <button class="likevid liked-button row"><div class="vidlikescount"><%=videolikes%></div><i class="fa fa-thumbs-up ml-1 mr-2 mt-1"></i></button>
                                 <button class="dislikevid dislike-button"><i class="fa fa-thumbs-down"></i></button>
 <%
                 }
                 else if(likevidstatus==0){
 %>
-                                <button class="likevid like-button"><i class="fa fa-thumbs-up"></i></button>
+                                <button class="likevid like-button row"><div class="vidlikescount"><%=videolikes%></div><i class="fa fa-thumbs-up ml-1 mr-2 mt-1"></i></button>
                                 <button class="dislikevid disliked-button"><i class="fa fa-thumbs-down"></i></button>
 <%
                 }
                 else{
 %>
-                                <button class="likevid like-button"><i class="fa fa-thumbs-up"></i></button>
+                                <button class="likevid like-button row"><div class="vidlikescount"><%=videolikes%></div><i class="fa fa-thumbs-up ml-1 mr-2 mt-1"></i></button>
                                 <button class="dislikevid dislike-button"><i class="fa fa-thumbs-down"></i></button>
 <%
                 }
@@ -420,12 +437,6 @@
                 }
 %>
                                 </div>
-                                <div class="replydiv2 replydiv2<%=rs11.getString("code")%> d-none ml-5 pl-5 mt-2" id="<%=rs11.getString("code")%>">
-                                    <img src="userimages/<%=usercode%>.jpg" style="height:40px;width:40px" class="rounded-circle">
-                                    <input class="underline-input creply2 creply2<%=rs11.getString("code")%> ml-3" id="<%=rs11.getString("code")%>" style="width: 60%" placeholder="Add reply...">
-                                    <button class="btn btn-secondary ccanbtn2 ccanbtn2<%=rs11.getString("code")%> ml-2" id="<%=rs11.getString("code")%>">Cancel</button>
-                                    <button class="btn btn-primary creplybtn2 creplybtn2<%=rs11.getString("code")%> ml-2" id="<%=rs11.getString("code")%>">Reply</button>
-                                </div>
 <%
             }
 %>
@@ -520,7 +531,7 @@
                     <div class="modal-body">
                         <div id="lg_msg"></div>
                         <form method="post" ACTION="add_playlist_img.jsp?id=<%=code%>" name="uploadForm" ENCTYPE='multipart/form-data'>
-                            <label class="form-control">Select Image :</label>
+                            <label>Select Image :</label>
                             <input type="file" name="uploadFile" size="40" class="form-control">
                             <input type="submit" name="Submit" class="btn btn-primary" value="Submit">
                         </form>
@@ -658,14 +669,14 @@
                     }
                     else{
                         var id = $(this).attr("rel");
-                        $(".replydiv2"+id).removeClass("d-none");
-                        $(".creply2"+id).focus();
-                        $(".ccanbtn2"+id).click(function(){
-                            $(".replydiv2"+id).addClass("d-none");
+                        $(".replydiv"+id).removeClass("d-none");
+                        $(".creply"+id).focus();
+                        $(".ccanbtn"+id).click(function(){
+                            $(".replydiv"+id).addClass("d-none");
                         })
-                        $(".creplybtn2"+id).click(function(){
-                            var reply = $(".creply2"+id).val();
-                            $(".replydiv2"+id).addClass("d-none");
+                        $(".creplybtn"+id).click(function(){
+                            var reply = $(".creply"+id).val();
+                            $(".replydiv"+id).addClass("d-none");
                             $.post("addcmntreply.jsp",{id:id,vidcode:vidcode,code:usercode,cmntreply:reply});
                         })
                     }

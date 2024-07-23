@@ -42,6 +42,12 @@
                 if(email=="null"){
                     $(".navbar").css("padding","10px");
                 }
+                $("#sg").click(function(){
+                    $("#signup").modal();
+                });
+                $("#si").click(function(){
+                    $("#login").modal();
+                })
                 $('.menu-btn').click(function() {
                   $('.sidebar').toggleClass('active');
                   $('.mainarea').toggleClass('active');
@@ -58,6 +64,18 @@
                         data=data.trim();
                         if(data=="Success"){
                             location.reload();
+                        }
+                    });
+                });
+                $("#submitt").click(function(){
+                    var name = $("#name").val();
+                    var email = $("#email2").val();
+                    var pass = $("#pass2").val();
+                    var des =$("#des").val();
+                    $.post("signup.jsp",{email:email,des:des,name:name,pass:pass},function(data){
+                        data=data.trim();
+                        if(data=="Success"){
+                            $("#addimage2").modal();
                         }
                     });
                 });
@@ -166,14 +184,36 @@
                     </div>
                     <div class="modal-body">
                         <div id="lg_msg"></div>
+                        <label>Name</label>
+                        <input type="text" id="name" class="form-control"><br>
+                        <label>Describe Yourself</label>
+                        <input type="text" id="des" class="form-control"><br>
                         <label>Email</label>
-                        <input type="text" id="email" class="form-control"><br>
+                        <input type="email" id="email2" class="form-control"><br>
                         <label>Password</label>
-                        <input type="password" id="pass" class="form-control"><br>
-                        <button class="btn btn-danger" id="submit" data-dismiss="modal">Login</button><br>
+                        <input type="password" id="pass2" class="form-control"><br>
+                        <button class="btn btn-danger signup" id="submitt" data-dismiss="modal">Sign Up</button><br>
                     </div>
                     <div class="modal-footer">
-                        <span>Don't have an account <i style="color:red;cursor:pointer" id="sg" data-dismiss="modal">Sign Up</i></span>
+                        <span>Already have an account <i style="color:red;cursor:pointer" id="si" data-dismiss="modal">Sign In</i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal" id="addimage2">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Add Profile Image</h4>
+                        <button type="button" class="close" data-dismiss="modal" style="color:black">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="lg_msg"></div>
+                        <form method="post" ACTION="add_profile_img.jsp" name="uploadForm" ENCTYPE='multipart/form-data'>
+                            <label>Select Image :</label>
+                            <input type="file" name="uploadFile" size="40" class="form-control"><br>
+                            <input type="submit" name="Submit" class="btn btn-primary" value="Submit">
+                        </form>
                     </div>
                 </div>
             </div>

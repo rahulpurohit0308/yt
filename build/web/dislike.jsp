@@ -26,7 +26,7 @@
             ps1.setString(2, usercode);
             ps1.setString(3, vidcode);
             if(ps1.executeUpdate()>0){
-                out.print(0);
+                out.print(1);
             }
         }
         else{

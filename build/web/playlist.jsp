@@ -121,8 +121,9 @@
                 })
                 $(".fa-trash-o").click(function(){
                     var plcode = "<%=plcode%>";
-                    $.post("deleteplaylist.jsp",{plcode:plcode});
-                    window.location.href = 'library.jsp';
+                    $.post("deleteplaylist.jsp",{plcode:plcode},function(){
+                        window.location.href = 'library.jsp';
+                    });
                 })
             })
         </script>
