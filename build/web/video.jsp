@@ -49,6 +49,10 @@
                 var usercode = "<%=usercode%>";
                 var channelcode = "<%=usercode1%>";
                 var vidcode = "<%=code%>";
+                $('.menu-btn').click(function(){
+                    $('.mainarea').toggleClass('active');
+                    $('.mainarea').toggleClass('opacityfilter');
+                });
                 if(email!=="null"){
                     $.post("updatehistory.jsp",{usercode:usercode,vidcode:vidcode});
                 }
@@ -382,24 +386,25 @@
             }
 %>
                             <div class="cmntrepliessec cmntrepliessec<%=rs11.getString("code")%> d-none" id="<%=rs11.getString("code")%>">
+                                <div class='repliess'>
 <%
             ResultSet rs16 = st1.executeQuery("select * from comment where parent_code='"+rs11.getString("code")+"'");
             while(rs16.next()){
 %>
-                                <div class="row mt-4" id="reply<%=rs16.getString("code")%>" style="justify-content:space-between">
-                                    <div class="row ml-5 pl-5">
-                                        <img src="userimages/<%=rs16.getString("usercode")%>.jpg" style="height:50px;width:50px" class="rounded-circle">
-                                        <div class="mt-1">
+                                    <div class="row mt-4" id="reply<%=rs16.getString("code")%>" style="justify-content:space-between">
+                                        <div class="row ml-5 pl-5">
+                                            <img src="userimages/<%=rs16.getString("usercode")%>.jpg" style="height:50px;width:50px" class="rounded-circle">
+                                            <div class="mt-1">
 <%
                 ResultSet rs17 = st2.executeQuery("select * from users where code='"+rs16.getString("usercode")+"'");
                 if(rs17.next()){                
 %>
-                                            <h6 class="ml-3" style="line-height: 10px"><u><%=rs17.getString("name")%></u></h6>
+                                                <h6 class="ml-3" style="line-height: 10px"><u><%=rs17.getString("name")%></u></h6>
 <%
                 }
 %>
-                                            <p class="ml-3 fixreply<%=rs16.getString("code")%>"><%=rs16.getString("comment")%></p>
-                                            <input class="underline-input editreply<%=rs16.getString("code")%> d-none ml-3" value="<%=rs16.getString("comment")%>">
+                                                <p class="ml-3 fixreply<%=rs16.getString("code")%>"><%=rs16.getString("comment")%></p>
+                                                <input class="underline-input editreply<%=rs16.getString("code")%> d-none ml-3" value="<%=rs16.getString("comment")%>">
 <%
             int replylikes=0;
             ResultSet rs18 = st2.executeQuery("select count(*) as n from commentlikes where commentcode='"+rs16.getString("code")+"' and status=1");
@@ -410,36 +415,37 @@
             if(rs19.next()){
                 if(rs19.getInt("status")==1){
 %>
-                    <div class="row ml-3"><div class="likes likes<%=rs16.getString("code")%>"><%=replylikes%></div><span class="fa fa-thumbs-up likecmnt likecmnt<%=rs16.getString("code")%> text-primary mx-1 mt-1" rel="<%=rs16.getString("code")%>"></span>|<span class="fa fa-thumbs-down dislikecmnt dislikecmnt<%=rs16.getString("code")%> mx-1 mt-1" rel="<%=rs16.getString("code")%>"></span>|<span class="fa fa-reply replycmnt2 replycmnt2<%=rs11.getString("code")%> mx-1 mt-1" rel="<%=rs11.getString("code")%>"></span></div>
+                                                <div class="row ml-3"><div class="likes likes<%=rs16.getString("code")%>"><%=replylikes%></div><span class="fa fa-thumbs-up likecmnt likecmnt<%=rs16.getString("code")%> text-primary mx-1 mt-1" rel="<%=rs16.getString("code")%>"></span>|<span class="fa fa-thumbs-down dislikecmnt dislikecmnt<%=rs16.getString("code")%> mx-1 mt-1" rel="<%=rs16.getString("code")%>"></span>|<span class="fa fa-reply replycmnt2 replycmnt2<%=rs11.getString("code")%> mx-1 mt-1" rel="<%=rs11.getString("code")%>"></span></div>
 <%                  
                 }
                 else if(rs19.getInt("status")==0){
 %>
-                    <div class="row ml-3"><div class="likes likes<%=rs16.getString("code")%>"><%=replylikes%></div><span class="fa fa-thumbs-up likecmnt likecmnt<%=rs16.getString("code")%> mx-1 mt-1" rel="<%=rs16.getString("code")%>"></span>|<span class="fa fa-thumbs-down dislikecmnt dislikecmnt<%=rs16.getString("code")%> text-danger mx-1 mt-1" rel="<%=rs16.getString("code")%>"></span>|<span class="fa fa-reply replycmnt2 replycmnt2<%=rs11.getString("code")%> mx-1 mt-1" rel="<%=rs11.getString("code")%>"></span></div>
+                                                <div class="row ml-3"><div class="likes likes<%=rs16.getString("code")%>"><%=replylikes%></div><span class="fa fa-thumbs-up likecmnt likecmnt<%=rs16.getString("code")%> mx-1 mt-1" rel="<%=rs16.getString("code")%>"></span>|<span class="fa fa-thumbs-down dislikecmnt dislikecmnt<%=rs16.getString("code")%> text-danger mx-1 mt-1" rel="<%=rs16.getString("code")%>"></span>|<span class="fa fa-reply replycmnt2 replycmnt2<%=rs11.getString("code")%> mx-1 mt-1" rel="<%=rs11.getString("code")%>"></span></div>
 <%
                 }
             }
             else{
 %>
-                    <div class="row ml-3"><div class="likes likes<%=rs16.getString("code")%>"><%=replylikes%></div><span class="fa fa-thumbs-up likecmnt likecmnt<%=rs16.getString("code")%> mx-1 mt-1" rel="<%=rs16.getString("code")%>"></span>|<span class="fa fa-thumbs-down dislikecmnt dislikecmnt<%=rs16.getString("code")%> mx-1 mt-1" rel="<%=rs16.getString("code")%>"></span>|<span class="fa fa-reply replycmnt2 replycmnt2<%=rs11.getString("code")%> mx-1 mt-1" rel="<%=rs11.getString("code")%>"></span></div>
+                                                <div class="row ml-3"><div class="likes likes<%=rs16.getString("code")%>"><%=replylikes%></div><span class="fa fa-thumbs-up likecmnt likecmnt<%=rs16.getString("code")%> mx-1 mt-1" rel="<%=rs16.getString("code")%>"></span>|<span class="fa fa-thumbs-down dislikecmnt dislikecmnt<%=rs16.getString("code")%> mx-1 mt-1" rel="<%=rs16.getString("code")%>"></span>|<span class="fa fa-reply replycmnt2 replycmnt2<%=rs11.getString("code")%> mx-1 mt-1" rel="<%=rs11.getString("code")%>"></span></div>
 <%
             }
 %>
+                                            </div>
                                         </div>
-                                    </div>
 <%
                 if(rs16.getString("usercode").equals(usercode)){
 %>
-                                    <div class="row">
-                                        <span class="fa fa-pencil replyeditcmnt replyeditcmnt<%=rs16.getString("code")%> mr-3" rel="<%=rs16.getString("code")%>"></span><span class="fa fa-check d-none replyupdatecmnt replyupdatecmnt<%=rs16.getString("code")%> mr-3" rel="<%=rs16.getString("code")%>"></span><span class="fa fa-trash replydeletecmnt replydeletecmnt<%=rs16.getString("code")%> mx-5" rel="<%=rs16.getString("code")%>"></span>
-                                    </div>
+                                        <div class="row">
+                                            <span class="fa fa-pencil replyeditcmnt replyeditcmnt<%=rs16.getString("code")%> mr-3" rel="<%=rs16.getString("code")%>"></span><span class="fa fa-check d-none replyupdatecmnt replyupdatecmnt<%=rs16.getString("code")%> mr-3" rel="<%=rs16.getString("code")%>"></span><span class="fa fa-trash replydeletecmnt replydeletecmnt<%=rs16.getString("code")%> mx-5" rel="<%=rs16.getString("code")%>"></span>
+                                        </div>
 <%
                 }
 %>
-                                </div>
+                                    </div>
 <%
             }
 %>
+                                </div>
                             </div>
 <%
         }
@@ -626,12 +632,15 @@
                         $(".replydiv"+id).removeClass("d-none");
                         $(".creply"+id).focus();
                         $(".ccanbtn"+id).click(function(){
+                            $(".creply"+id).clear();
                             $(".replydiv"+id).addClass("d-none");
                         })
                         $(".creplybtn"+id).click(function(){
                             var reply = $(".creply"+id).val();
                             $(".replydiv"+id).addClass("d-none");
-                            $.post("addcmntreply.jsp",{id:id,vidcode:vidcode,code:usercode,cmntreply:reply});
+                            $.post("addcmntreply.jsp",{id:id,vidcode:vidcode,code:usercode,cmntreply:reply},function(data){
+                                $(".repliess").prepend(data);
+                            });
                         })
                     }
                 })

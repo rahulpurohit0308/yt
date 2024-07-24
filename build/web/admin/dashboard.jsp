@@ -39,22 +39,19 @@
                 });
                 $('#cat').click(function(){
                     showSection('cat');
-                    $("#msg").attr("class","");
-                    $("#msg").html("");
                 });
                 $('#user').click(function(){
                     showSection('user');
-                    $("#msg").attr("class","");
-                    $("#msg").html("");
                 });
                 $('#vid').click(function(){
                     showSection('vid');
-                    $("#msg").attr("class","");
-                    $("#msg").html("");
+                });
+                $('#cmnt').click(function(){
+                    showSection('cmnt');
                 });
                 showSection('cat');
                 function showSection(section){
-                    $('#catsection, #usersection, #vidsection').hide();
+                    $('#catsection, #usersection, #vidsection, #cmntsection').hide();
                     $('#'+section+'section').show();
                     $('.sbopt').removeClass('bg-white text-dark');
                     $('#'+section).addClass('bg-white text-dark');
@@ -138,6 +135,18 @@
                         }
                     });
             });
+            $(document).on("click",".deletecmnt",function(){
+                var id = $(this).attr("rel");
+                $("#"+id).fadeOut(1000);
+                $.post(
+                    "deletecomment.jsp",{id:id},function(data){
+                        data=data.trim();
+                        if(data=="Success"){
+                            $("#msg").attr("class","alert alert-warning");
+                            $("#msg").html("Comment Deleted");
+                        }
+                    });
+            });
         </script>
         <style>
             @media only screen and (max-width:1000px){
@@ -191,6 +200,9 @@
                 </div>
                 <div id="vidsection">
                     <jsp:include page="videos.jsp" /> 
+                </div>
+                <div id="cmntsection">
+                    <jsp:include page="comments.jsp" /> 
                 </div>
             </div>
         </div>

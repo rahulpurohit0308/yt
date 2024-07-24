@@ -65,6 +65,20 @@
                         if(data=="Success"){
                             location.reload();
                         }
+                        else if(data=="Error"){
+                            $("#login").modal();
+                            $("#email").val("");
+                            $("#pass").val("");
+                            $("#lg_msg").addClass("alert alert-danger");
+                            $("#lg_msg").text("Username or Password Incorrect");
+                        }
+                        else if(data=="Blocked"){
+                            $("#login").modal();
+                            $("#email").val("");
+                            $("#pass").val("");
+                            $("#lg_msg").addClass("alert alert-danger");
+                            $("#lg_msg").text("User Blocked");
+                        }
                     });
                 });
                 $("#submitt").click(function(){
@@ -183,7 +197,7 @@
                         <button type="button" class="close" data-dismiss="modal" style="color:black">&times;</button>
                     </div>
                     <div class="modal-body">
-                        <div id="lg_msg"></div>
+                        <div id="lg_msg2"></div>
                         <label>Name</label>
                         <input type="text" id="name" class="form-control"><br>
                         <label>Describe Yourself</label>

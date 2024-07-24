@@ -69,9 +69,9 @@
 <% 
     }
 %>
-                    </div>
-                    <div class="row">
-                        <a href="channel.jsp?id=<%=channelcode%>" class="ml-3 mr-2"><img src="userimages/<%=channelcode%>.jpg" style="height:30px;width:30px" class="rounded-circle"></a>
+                        </div>
+                        <div class="row">
+                            <a href="channel.jsp?id=<%=channelcode%>" class="ml-3 mr-2"><img src="userimages/<%=channelcode%>.jpg" style="height:30px;width:30px" class="rounded-circle"></a>
 <%
     ResultSet rs4 = st2.executeQuery("select * from users where code='"+channelcode+"'");
     while(rs4.next()){
@@ -94,9 +94,9 @@
 %>
                 <div class="row" style="height:80vh">
                     <div class='mx-auto my-auto'>
-                        <div class='row'><span class="fa fa-history mx-auto" style='font-size:100px'></span></div>
-                        <div class='row'><h6 class='mx-auto'>Keep track of what you watch</h6></div>
-                        <div class='row'><p class='mx-auto'>Watch history isn't viewable when signed out.</p></div>
+                        <div class='row'><span class="fa fa-clock-o mx-auto" style='font-size:100px'></span></div>
+                        <div class='row'><h6 class='mx-auto'>Don't have time currently, watch later at your own convenience.</h6></div>
+                        <div class='row'><p class='mx-auto'>Watch later isn't viewable when signed out.</p></div>
                         <div class='row'><button class='btn btn-primary signin mx-auto'>Sign In</button></div>
                     </div>
                 </div>

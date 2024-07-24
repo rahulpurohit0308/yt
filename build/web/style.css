@@ -195,3 +195,6 @@ video {
 .activecat:hover{
     background-color: black;
 }
+.opacityfilter{
+    filter: opacity(50%);
+}

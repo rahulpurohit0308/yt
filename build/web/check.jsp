@@ -9,11 +9,19 @@
                     ResultSet rs=st.executeQuery("select * from users where email='"+email+"'");
                     if(rs.next()){
                         if(rs.getString("password").equals(pass)){
-                            Cookie c = new Cookie("login", email);
-                            c.setMaxAge(3600);
-                            response.addCookie(c);
-                            out.print("Success");
+                            if(rs.getInt("status")==0){
+                                out.print("Blocked");
+                            }
+                            else{
+                                Cookie c = new Cookie("login", email);
+                                c.setMaxAge(3600);
+                                response.addCookie(c);
+                                out.print("Success");
+                            }
                         }
+                    }
+                    else{
+                        out.print("Error");
                     }
                     cn.close();
             }

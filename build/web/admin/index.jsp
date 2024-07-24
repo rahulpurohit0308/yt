@@ -9,16 +9,16 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         <title>JSP Page</title>
     </head>
-    <body>
+    <body style="background-color: #ffcccc">
         <div class="container-fluid">
-            <div class="col-8 col-md-4 col-lg-3 col-xl-3 mx-auto bg-danger text-light rounded mt-5">
-                    <form class="form-group py-5 px-3" method="post" action="check.jsp">
-                        <label><h5>Email:</h5></label>
-                        <input type="email" name="email" class="form-control" required><br>
-                        <label><h5>Password:</h5></label>
-                        <input type="password" name="pass" class="form-control" required><br>
-                        <button class="btn btn-warning" type="submit">Sign In</button>
-                    </form>
+            <div class="col-8 col-md-4 col-lg-3 col-xl-3 mx-auto bg-danger text-light rounded" style="margin-top: 25vh">
+                <form class="form-group py-5 px-3" method="post" action="check.jsp">
+                    <label><h5>Email:</h5></label>
+                    <input type="email" name="email" class="form-control" required><br>
+                    <label><h5>Password:</h5></label>
+                    <input type="password" name="pass" class="form-control" required><br>
+                    <button class="btn btn-warning" type="submit">Sign In</button>
+                </form>
             </div>
         </div>
     </body>

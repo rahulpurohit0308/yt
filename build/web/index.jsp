@@ -38,7 +38,7 @@
                 <div class="row ml-2 pb-2">
                     <button class="btn btn-secondary catbtn catbtnAll activecat mr-2 py-2" style="border-radius: 18px;height: 40px" rel="All">All</button>
 <%
-    ResultSet rs4 = st.executeQuery("select * from category ORDER BY RAND() limit 13");
+    ResultSet rs4 = st.executeQuery("select * from category ORDER BY RAND() limit 9");
     while(rs4.next()){
 %>
                     <button class="btn btn-secondary catbtn catbtn<%=rs4.getString("code")%> mx-2" style="border-radius: 18px;height: 40px" rel="<%=rs4.getString("code")%>"><%=rs4.getString("category")%></button>
