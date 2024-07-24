@@ -189,3 +189,9 @@ video {
 .underline-input:focus {
     border-bottom-color: white;
 }
+.activecat{
+    background-color: black;
+}
+.activecat:hover{
+    background-color: black;
+}

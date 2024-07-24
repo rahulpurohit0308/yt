@@ -103,7 +103,7 @@
                         </a>
                     </div>
                     <div class="col-5">
-                        <a href="video.jsp?id=<%=code%>"><h5 class="text-dark mb-3"><%=rs2.getString("title")%></h5></a>
+                        <a href="video.jsp?id=<%=vidcode%>"><h5 class="text-dark mb-3"><%=rs2.getString("title")%></h5></a>
                         <div class="row">
 <%
     ResultSet rs11 = st2.executeQuery("select * from views where vidcode='"+vidcode+"'");
