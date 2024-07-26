@@ -114,7 +114,7 @@
                     </div>
                     <div class="mx-auto col-xs-8 col-sm-8 details">
                         <h1 class="text-light" style="font-family: Poppins,sans-serif"><%=name%></h1>
-                        <h5 class="text-light subscount" style="display:inline"><%=subscount%> Subscribers | <%=videocount%> Videos | <%=views%> Views</h5>
+                        <h5 class="text-light" style="display:inline"><div class="subscount" style="display:inline"><%=subscount%></div> Subscribers | <%=videocount%> Videos | <%=views%> Views</h5>
                         <h6 class="text-light"><%=des%></h6>
                     </div>
 <%

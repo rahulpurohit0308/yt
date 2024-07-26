@@ -12,7 +12,8 @@
     <body style="background-color: #ffcccc">
         <div class="container-fluid">
             <div class="col-8 col-md-4 col-lg-3 col-xl-3 mx-auto bg-danger text-light rounded" style="margin-top: 25vh">
-                <form class="form-group py-5 px-3" method="post" action="check.jsp">
+                <h3 class="text-light text-center pt-3"><u>YT Administration</u></h3>
+                <form class="form-group pt-3 pb-5 px-3" method="post" action="check.jsp">
                     <label><h5>Email:</h5></label>
                     <input type="email" name="email" class="form-control" required><br>
                     <label><h5>Password:</h5></label>

@@ -44,10 +44,9 @@
 %>
                 <div class="row">
 <%
-    ResultSet rs2 = st.executeQuery("select * from history where usercode='"+code+"' order by dt desc");
+    ResultSet rs2 = st.executeQuery("select * from history where usercode='"+code+"' order by sn desc");
     while(rs2.next()){
         vidcode = rs2.getString("vidcode");
-        String dt=rs2.getString("dt");
         ResultSet rs3 = st1.executeQuery("select * from video where code='"+vidcode+"'");
         while(rs3.next()){
             channelcode = rs3.getString("user_code");
@@ -70,7 +69,6 @@
 <% 
     }
 %>
-                        <p class="text-dark ml-3" style="line-height:20px"><%=dt%></p>
                     </div>
                     <div class="row">
                         <a href="channel.jsp?id=<%=channelcode%>" class="ml-3 mr-2"><img src="userimages/<%=channelcode%>.jpg" style="height:30px;width:30px" class="rounded-circle"></a>

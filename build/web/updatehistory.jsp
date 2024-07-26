@@ -3,7 +3,7 @@
     try {
       Cookie c[]=request.getCookies();
       String email=null;
-      String date = new java.util.Date() + "";
+      int sn=0;
       String usercode=request.getParameter("usercode");
       String code1=request.getParameter("vidcode");
       for(int i=0;i<c.length;i++){
@@ -20,19 +20,24 @@
               Class.forName("com.mysql.jdbc.Driver");
               Connection cn=DriverManager.getConnection("jdbc:mysql://localhost:3306/yt","root","");
               Statement st = cn.createStatement();
-              ResultSet rs = st.executeQuery("select * from history where usercode='"+usercode+"' and vidcode='"+code1+"'");
+              ResultSet rs=st.executeQuery("select MAX(sn) from history");
               if(rs.next()){
-                  PreparedStatement ps=cn.prepareStatement("update history set dt=? where vidcode=? and usercode=?");
-                  ps.setString(1, date);
+                  sn=rs.getInt(1);
+              }
+              sn++;
+              ResultSet rs1 = st.executeQuery("select * from history where usercode='"+usercode+"' and vidcode='"+code1+"'");
+              if(rs1.next()){
+                  PreparedStatement ps=cn.prepareStatement("update history set sn=? where vidcode=? and usercode=?");
+                  ps.setInt(1,sn);
                   ps.setString(2, code1);
                   ps.setString(3, usercode);
                   ps.executeUpdate();
               }
               else{
                 PreparedStatement ps1=cn.prepareStatement("insert into history values(?,?,?)");
-                ps1.setString(1,usercode);
-                ps1.setString(2,code1);
-                ps1.setString(3,date);
+                ps1.setInt(1, sn);
+                ps1.setString(2,usercode);
+                ps1.setString(3,code1);
                 ps1.executeUpdate();
               }
               cn.close();

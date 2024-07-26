@@ -44,7 +44,7 @@
 %>
                 <div class="row">
 <%
-    ResultSet rs2 = st.executeQuery("select * from watchlater where usercode='"+code+"'order by vidcode desc");
+    ResultSet rs2 = st.executeQuery("select * from watchlater where usercode='"+code+"'order by sn desc");
     while(rs2.next()){
         vidcode = rs2.getString("vidcode");
         ResultSet rs3 = st1.executeQuery("select * from video where code='"+vidcode+"'");
