@@ -81,64 +81,83 @@
         ps.setString(4,vidcode);
         ps.setString(5,user_code);
         ps.setString(6,commentreply);
-        out.print(sn+" "+code+" "+parentcode+" "+vidcode+" "+user_code+" "+commentreply);
         if(ps.executeUpdate()>0){
 %>
-                <div class="row mt-4" id="<%=code%>" style="justify-content:space-between">
+                <div class="row pl-5 mt-4" id="<%=code%>" style="justify-content:space-between">
                     <div class="row ml-5">
                         <a href="channel.jsp?id=<%=user_code%>"><img src="userimages/<%=user_code%>.jpg" style="height:50px;width:50px" class="rounded-circle"></a>
                         <div class="mt-1">
                             <h6 class="ml-3" style="line-height: 10px"><u><%=replyusername%></u></h6>
                             <p class="ml-3 fixreply1"><%=commentreply%></p>
                             <input class="underline-input editreplyy1 d-none ml-3" value="<%=commentreply%>">
-                            <div class="row ml-3"><div class="likes1">0</div><span class="fa fa-thumbs-up likecmnt1 mx-1 mt-1" rel="<%=code%>"></span>|<span class="fa fa-thumbs-down dislikecmnt1 mx-1 mt-1" rel="<%=code%>"></span>|<span class="fa fa-reply mx-1 mt-1"></span></div>
+                            <div class="row ml-3"><div class="likes2 likes2<%=code%>">0</div><span class="fa fa-thumbs-up likecmnt2 likecmnt2<%=code%> mx-1 mt-1" rel="<%=code%>"></span>|<span class="fa fa-thumbs-down dislikecmnt2 dislikecmnt2<%=code%> mx-1 mt-1" rel="<%=code%>"></span>|<span class="fa fa-reply replycmnt2 mx-1 mt-1" rel="<%=code%>"></span></div>
                         </div>
                     </div>
                     <div class="row">
                         <span class="fa fa-pencil editreply1 mr-3" rel="<%=code%>"></span><span class="fa fa-check updatereply1 d-none mr-3" rel="<%=code%>"></span><span class="fa fa-trash deletereply1 mx-5" rel="<%=code%>"></span>
                     </div>
                 </div>
+                <div class="replydiv3 replydiv3<%=code%> d-none ml-5 pl-5 mt-2" id="<%=code%>">
+                    <img src="userimages/<%=user_code%>.jpg" style="height:40px;width:40px" class="rounded-circle">
+                    <input class="underline-input creply3 creply3<%=parentcode%> ml-3" id="<%=parentcode%>" style="width: 60%" placeholder="Add reply...">
+                    <button class="btn btn-secondary ccanbtn3 ccanbtn3<%=parentcode%> ml-2" id="<%=parentcode%>">Cancel</button>
+                    <button class="btn btn-primary creplybtn3 creplybtn3<%=parentcode%> ml-2" id="<%=parentcode%>">Reply</button>
+                </div>
+                <div class="repliess3 repliess3<%=code%> d-none"></div>
             <script>
                 $(document).ready(function(){
                     var usercode = "<%=user_code%>";
-                    $(".likecmnt1").click(function(){
+                    var vidcode = "<%=vidcode%>";
+                    $(".likecmnt2").click(function(){
                         var id = $(this).attr("rel");
                         $.post("commentlike.jsp",{commentcode:id,usercode:usercode},function(data){
                             if(data==1){
-                                var likes = Number($(".likes1").text());
-                                $(".likes1").text(likes+1);
-                                $(".likecmnt1").addClass("text-primary");
-                                $(".dislikecmnt1").removeClass("text-danger");
+                                $(".likes2"+id).text(1);
+                                $(".likecmnt2"+id).addClass("text-primary");
+                                $(".dislikecmnt2"+id).removeClass("text-danger");
                             }
                             else{
-                                var likes = Number($(".likes1").text());
-                                $(".likes1").text(likes-1);
-                                $(".likecmnt1").removeClass("text-primary");
-                                $(".dislikecmnt1").removeClass("text-danger");
+                                $(".likes2"+id).text(0);
+                                $(".likecmnt2"+id).removeClass("text-primary");
+                                $(".dislikecmnt2"+id).removeClass("text-danger");
                             }
                         });
                     })
-                    $(".dislikecmnt1").click(function(){
+                    $(".dislikecmnt2").click(function(){
                         var id = $(this).attr("rel");
                         $.post("commentdislike.jsp",{commentcode:id,usercode:usercode},function(data){
                             if(data==0){
-                                var likes = Number($(".likes1").text());
-                                $(".likes1").text(likes);
-                                $(".likecmnt1").removeClass("text-primary");
-                                $(".dislikecmnt1").addClass("text-danger");
+                                $(".likes2"+id).text(0);
+                                $(".likecmnt2"+id).removeClass("text-primary");
+                                $(".dislikecmnt2"+id).addClass("text-danger");
                             }
                             else if(data==1){
-                                var likes = Number($(".likes1").text());
-                                $(".likes1").text(likes-1);
-                                $(".likecmnt1").removeClass("text-primary");
-                                $(".dislikecmnt1").addClass("text-danger");
+                                $(".likes2"+id).text(0);
+                                $(".likecmnt2"+id).removeClass("text-primary");
+                                $(".dislikecmnt2"+id).addClass("text-danger");
                             }
                             else{
-                                var likes = Number($("likes1"+id).text());
-                                $(".likes1").text(likes);
-                                $(".likecmnt1").removeClass("text-primary");
-                                $(".dislikecmnt1").removeClass("text-danger");
+                                $(".likes2"+id).text(0);
+                                $(".likecmnt2"+id).removeClass("text-primary");
+                                $(".dislikecmnt2"+id).removeClass("text-danger");
                             }
+                        });
+                    })
+                    var id ="";
+                    $(".replycmnt2").click(function(){
+                        id = $(this).attr("rel");
+                        $(".replydiv3"+id).removeClass("d-none");
+                        $(".creply3"+id).focus();
+                        $(".ccanbtn3"+id).click(function(){
+                            $(".creply3"+id).clear();
+                            $(".replydiv3"+id).addClass("d-none");
+                        })
+                    })
+                    $(".creplybtn3"+id).click(function(){
+                        var reply = $(".creply3"+id).val();
+                        $(".replydiv3"+id).addClass("d-none");
+                        $.post("addcmntreply.jsp",{id:id,vidcode:vidcode,code:usercode,cmntreply:reply},function(data){
+                            $(".repliess3"+id).prepend(data);
                         });
                     })
                 })

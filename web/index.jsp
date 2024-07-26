@@ -36,7 +36,7 @@
             <jsp:include page="sidebar.jsp" />
             <div class="mainarea mt-1">
                 <div class="row ml-2 pb-2">
-                    <button class="btn btn-secondary catbtn catbtnAll activecat mr-2 py-2" style="border-radius: 18px;height: 40px" rel="All">All</button>
+                    <button class="btn btn-secondary catbtn catbtnAll activecat mr-2 py-2" style="border-radius: 14px;height: 40px" rel="All">All</button>
 <%
     ResultSet rs4 = st.executeQuery("select * from category ORDER BY RAND() limit 9");
     while(rs4.next()){

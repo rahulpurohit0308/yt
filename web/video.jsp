@@ -369,24 +369,18 @@
                                 <button class="btn btn-primary creplybtn creplybtn<%=rs11.getString("code")%> ml-2" id="<%=rs11.getString("code")%>">Reply</button>
                             </div>
 <%
-            ResultSet rs15 = st1.executeQuery("select count(*) as p from comment where parent_code='"+rs11.getString("code")+"'");
+            ResultSet rs15 = st1.executeQuery("select * from comment where parent_code='"+rs11.getString("code")+"'");
             if(rs15.next()){
-                if(rs15.getInt("p")>1){
 %>
-                            <span class="fa fa-sort-asc replies repliesasc<%=rs11.getString("code")%> d-none ml-5 pl-5 mt-2" style="cursor:pointer" rel="<%=rs11.getString("code")%>"> <%=rs15.getInt("p")%> Replies</span>
-                            <span class="fa fa-sort-desc replies repliesdesc<%=rs11.getString("code")%> ml-5 pl-5 mt-2" style="cursor:pointer" rel="<%=rs11.getString("code")%>"> <%=rs15.getInt("p")%> Replies</span>
+                            <div class="repliesbtn repliesbtn<%=rs11.getString("code")%>" id="<%=rs11.getString("code")%>">
+                                <span class="fa fa-sort-asc replies repliesasc<%=rs11.getString("code")%> d-none ml-5 pl-5 mt-2" style="cursor:pointer" rel="<%=rs11.getString("code")%>"> Hide Replies</span>
+                                <span class="fa fa-sort-desc replies repliesdesc<%=rs11.getString("code")%> ml-5 pl-5 mt-2" style="cursor:pointer" rel="<%=rs11.getString("code")%>"> See Replies</span>
+                            </div>
 <%
-                }
-                else if(rs15.getInt("p")==1){
-%>
-                            <span class="fa fa-sort-asc replies repliesasc<%=rs11.getString("code")%> d-none ml-5 pl-5 mt-2" style="cursor:pointer" rel="<%=rs11.getString("code")%>"> 1 Reply</span>
-                            <span class="fa fa-sort-desc replies repliesdesc<%=rs11.getString("code")%> ml-5 pl-5 mt-2" style="cursor:pointer" rel="<%=rs11.getString("code")%>"> 1 Reply</span>
-<%
-                }
             }
 %>
                             <div class="cmntrepliessec cmntrepliessec<%=rs11.getString("code")%> d-none" id="<%=rs11.getString("code")%>">
-                                <div class='repliess'>
+                                <div class="repliess repliess<%=rs11.getString("code")%>">
 <%
             ResultSet rs16 = st1.executeQuery("select * from comment where parent_code='"+rs11.getString("code")+"'");
             while(rs16.next()){
@@ -554,7 +548,9 @@
                 $('.deletecmnt').click(function(){
                     var id = $(this).attr("rel");
                     $.post("deletecomment.jsp",{id:id});
-                    $("#"+id).fadeOut(1000);                          
+                    $("#"+id).fadeOut(1000);
+                    $(".repliesbtn"+id).fadeOut(1000);
+                    $(".repliess"+id).fadeOut(1000);
                 })
                 $(".editcmnt").click(function(){
                     var id = $(this).attr("rel");
@@ -649,11 +645,12 @@
                     $(".repliesasc"+id).toggleClass("d-none");
                     $(".repliesdesc"+id).toggleClass("d-none");
                     $(".cmntrepliessec"+id).toggleClass("d-none");
-                })
+                    $(".replydiv"+id).addClass("d-none");
+                });
                 $('.replydeletecmnt').click(function(){
                     var id = $(this).attr("rel");
                     $.post("deletecomment.jsp",{id:id});
-                    $("#reply"+id).fadeOut(1000);                          
+                    $("#reply"+id).fadeOut(1000);
                 })
                 $(".replyeditcmnt").click(function(){
                     var id = $(this).attr("rel");
@@ -686,7 +683,9 @@
                         $(".creplybtn"+id).click(function(){
                             var reply = $(".creply"+id).val();
                             $(".replydiv"+id).addClass("d-none");
-                            $.post("addcmntreply.jsp",{id:id,vidcode:vidcode,code:usercode,cmntreply:reply});
+                            $.post("addcmntreply.jsp",{id:id,vidcode:vidcode,code:usercode,cmntreply:reply},function(data){
+                                $(".repliess").prepend(data);
+                            });
                         })
                     }
                 })

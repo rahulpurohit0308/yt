@@ -12,11 +12,6 @@
                 <script src="jquery-3.6.4.min.js"></script>
                 <script>
                     $(document).ready(function(){
-                        $('.deletecmnt1').click(function(){
-                            var id = $(this).attr("rel");
-                            $.post("deletecomment.jsp",{id:id});
-                            $("#"+id).fadeOut(1000);                          
-                        })
                         $('.editcmnt1').click(function(){
                             var id = $(this).attr("rel");
                             $(this).addClass("d-none");
@@ -91,55 +86,92 @@
                             <h6 class="ml-3" style="line-height: 10px"><u><%=commentusername%></u></h6>
                             <p class="ml-3 fixcomment1"><%=comment%></p>
                             <input class="underline-input editcomment1 d-none ml-3" value="<%=comment%>">
-                            <div class="row ml-3"><div class="likes1">0</div><span class="fa fa-thumbs-up likecmnt1 mx-1 mt-1" rel="<%=code%>"></span>|<span class="fa fa-thumbs-down dislikecmnt1 mx-1 mt-1" rel="<%=code%>"></span>|<span class="fa fa-reply mx-1 mt-1"></span></div>
+                            <div class="row ml-3"><div class="likes1 likes1<%=code%>">0</div><span class="fa fa-thumbs-up likecmnt1 likecmnt1<%=code%> mx-1 mt-1" rel="<%=code%>"></span>|<span class="fa fa-thumbs-down dislikecmnt1 dislikecmnt1<%=code%> mx-1 mt-1" rel="<%=code%>"></span>|<span class="fa fa-reply replycmnt1 mx-1 mt-1"></span></div>
                         </div>
                     </div>
                     <div class="row">
                         <span class="fa fa-pencil editcmnt1 mr-3" rel="<%=code%>"></span><span class="fa fa-check updatecmnt1 d-none mr-3" rel="<%=code%>"></span><span class="fa fa-trash deletecmnt1 mx-5" rel="<%=code%>"></span>
                     </div>
                 </div>
+                <div class="replydiv replydiv<%=code%> d-none ml-5 pl-5 mt-2" id="<%=code%>">
+                    <img src="userimages/<%=user_code%>.jpg" style="height:40px;width:40px" class="rounded-circle">
+                    <input class="underline-input creply creply<%=code%> ml-3" id="<%=code%>" style="width: 60%" placeholder="Add reply...">
+                    <button class="btn btn-secondary ccanbtn ccanbtn<%=code%> ml-2" id="<%=code%>">Cancel</button>
+                    <button class="btn btn-primary creplybtn1 creplybtn1<%=code%> ml-2" id="<%=code%>">Reply</button>
+                </div>
+                <div class="repliesbtn repliesbtn<%=code%> d-none" id="<%=code%>">
+                    <span class="fa fa-sort-asc replies repliesasc<%=code%> d-none ml-5 pl-5 mt-2" style="cursor:pointer" rel="<%=code%>"> Hide Replies</span>
+                    <span class="fa fa-sort-desc replies repliesdesc<%=code%> ml-5 pl-5 mt-2" style="cursor:pointer" rel="<%=code%>"> See Replies</span>
+                </div>
+                <div class="repliess repliess<%=code%> d-none"></div>
             <script>
                 $(document).ready(function(){
                     var usercode = "<%=user_code%>";
-                    $(".likecmnt1").click(function(){
+                    var vidcode = "<%=video_code%>";
+                    var id = "<%=code%>";
+                    $('.deletecmnt1').click(function(){
                         var id = $(this).attr("rel");
+                        $.post("deletecomment.jsp",{id:id});
+                        $("#"+id).fadeOut(1000);
+                        $(".repliesbtn"+id).fadeOut(1000);
+                    })
+                    $(".likecmnt1").click(function(){
                         $.post("commentlike.jsp",{commentcode:id,usercode:usercode},function(data){
                             if(data==1){
-                                var likes = Number($(".likes1").text());
-                                $(".likes1").text(likes+1);
-                                $(".likecmnt1").addClass("text-primary");
-                                $(".dislikecmnt1").removeClass("text-danger");
+                                $(".likes1"+id).text(1);
+                                $(".likecmnt1"+id).addClass("text-primary");
+                                $(".dislikecmnt1"+id).removeClass("text-danger");
                             }
                             else{
-                                var likes = Number($(".likes1").text());
-                                $(".likes1").text(likes-1);
-                                $(".likecmnt1").removeClass("text-primary");
-                                $(".dislikecmnt1").removeClass("text-danger");
+                                $(".likes1"+id).text(0);
+                                $(".likecmnt1"+id).removeClass("text-primary");
+                                $(".dislikecmnt1"+id).removeClass("text-danger");
                             }
                         });
                     })
                     $(".dislikecmnt1").click(function(){
-                        var id = $(this).attr("rel");
                         $.post("commentdislike.jsp",{commentcode:id,usercode:usercode},function(data){
                             if(data==0){
-                                var likes = Number($(".likes1").text());
-                                $(".likes1").text(likes);
-                                $(".likecmnt1").removeClass("text-primary");
-                                $(".dislikecmnt1").addClass("text-danger");
+                                $(".likes1"+id).text(0);
+                                $(".likecmnt1"+id).removeClass("text-primary");
+                                $(".dislikecmnt1"+id).addClass("text-danger");
                             }
                             else if(data==1){
-                                var likes = Number($(".likes1").text());
-                                $(".likes1").text(likes-1);
-                                $(".likecmnt1").removeClass("text-primary");
-                                $(".dislikecmnt1").addClass("text-danger");
+                                $(".likes1"+id).text(0);
+                                $(".likecmnt1"+id).removeClass("text-primary");
+                                $(".dislikecmnt1"+id).addClass("text-danger");
                             }
                             else{
-                                var likes = Number($("likes1"+id).text());
-                                $(".likes1").text(likes);
-                                $(".likecmnt1").removeClass("text-primary");
-                                $(".dislikecmnt1").removeClass("text-danger");
+                                $(".likes1"+id).text(0);
+                                $(".likecmnt1"+id).removeClass("text-primary");
+                                $(".dislikecmnt1"+id).removeClass("text-danger");
                             }
                         });
+                    })
+                    $(".replycmnt1").click(function(){
+                        $(".replydiv"+id).removeClass("d-none");
+                        $(".creply"+id).focus();
+                        $(".ccanbtn"+id).click(function(){
+                            $(".creply"+id).clear();
+                            $(".replydiv"+id).addClass("d-none");
+                        })
+                        $(".replies").click(function(){
+                            var id = $(this).attr("rel");
+                            $(".repliesasc"+id).toggleClass("d-none");
+                            $(".repliesdesc"+id).toggleClass("d-none");
+                            $(".cmntrepliessec"+id).toggleClass("d-none");
+                        })
+                    })
+                    $(".creplybtn1"+id).click(function(){
+                        var reply = $(".creply"+id).val();
+                        $(".replydiv"+id).addClass("d-none");
+                        $.post("addcmntreply.jsp",{id:id,vidcode:vidcode,code:usercode,cmntreply:reply},function(data){
+                            $(".repliess"+id).prepend(data);
+                        });
+                        $(".repliesbtn"+id).removeClass("d-none");
+                    })
+                    $(".repliesbtn"+id).click(function(){
+                        $(".repliess"+id).toggleClass("d-none");
                     })
                 })
                 
